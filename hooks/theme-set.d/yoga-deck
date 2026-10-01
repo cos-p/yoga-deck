@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Yoga Deck theme-set hook: follow an Omarchy theme change on the on-screen keyboard.
+#
+# `omarchy-theme-set` runs this after the staged theme directory is swapped in. The hook
+# knows nothing about wvkbd; it sends one `theme_changed` line to the Yoga Deck runtime's
+# existing 0600 socket and lets the runtime decide what to do. The theme name in "$1" is
+# deliberately not forwarded: the runtime re-resolves the palette through
+# `omarchy theme color`, the same cascade every other Omarchy consumer reads, so there is
+# only ever one source of truth for the colors.
+#
+# A theme change must never fail because of this hook. No runtime, no socket, an
+# unreadable socket, or no python3 all exit 0 silently.
+#
+# Install with: omarchy hook install theme-set hooks/theme-set.d/yoga-deck
+
+python3 - <<'PY' >/dev/null 2>&1
+import os
+import socket
+
+runtime_dir = os.environ.get("XDG_RUNTIME_DIR")
+if not runtime_dir:
+    raise SystemExit(0)
+try:
+    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as client:
+        client.settimeout(2.0)
+        client.connect(os.path.join(runtime_dir, "yoga-deck", "shell.sock"))
+        client.sendall(b'{"command": "theme_changed"}\n')
+        client.recv(4096)
+except OSError:
+    pass
+PY
+
+exit 0

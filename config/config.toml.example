@@ -1,0 +1,64 @@
+# Copy this file to ~/.config/yoga-deck/config.toml and uncomment only what you
+# want to change. Every setting below is shown at its default, so a file with
+# nothing uncommented behaves exactly like no file at all.
+#
+# A value Yoga Deck cannot use is discarded on its own: that one key falls back
+# to its default, the runtime logs `settings_keys_rejected` naming it, and
+# everything else in the file still applies. A typo can never stop the keyboard
+# from appearing.
+#
+# Settings are re-read every time the keyboard is spawned, so an edit takes
+# effect the next time you fold, with no service restart.
+#
+# You can also change a setting without an editor, which is the point when the
+# machine is folded and this file is the least reachable thing on it:
+#
+#     yoga-doctor config                      # what every setting is, and why
+#     yoga-doctor config set osk.landscape_height 400
+#     yoga-doctor config unset osk.landscape_height
+#
+# Those write to ~/.config/yoga-deck/config.local.toml, never to this file, so
+# your comments and layout here are safe. Values there override the same keys
+# here; `yoga-doctor config get` names the file each effective value came from,
+# and `config unset` hands a setting back to this one.
+#
+# The Omarchy panel changes the same settings the same way, which is the point:
+# folded, there is no keyboard to edit this file with. Each row there names the
+# file its value came from, and Reset hands the setting back to this one.
+
+[osk]
+# Keyboard height in logical pixels, 60 to 2000. The defaults are the measured
+# X390 profile: about 13 mm per row at the panel's 1.25 scale.
+# landscape_height = 280
+# portrait_height = 360
+
+# Any Pango font description.
+# font = "Sans 20"
+
+# Rounding radius of individual key faces in pixels, 0 to 64. Left unset, wvkbd
+# uses its own default rather than being told a value.
+# corner_radius = 0
+
+# How solid the keyboard is, as a percentage, 10 to 100. Key labels stay fully
+# opaque at every setting, so a see-through keyboard is still a readable one.
+# Below about 40 the board, special keys and key faces stop separating from each
+# other against whatever is behind them; the panel slider stops there for that
+# reason, and a smaller number here is honoured.
+# opacity = 100
+
+# The magnified preview above a key while it is held.
+# key_popup = true
+
+# Whether a key is highlighted while pressed.
+# highlight = true
+
+# Colors are deliberately absent. Yoga Deck derives the whole palette from your
+# active Omarchy theme at every spawn, so the keyboard follows `omarchy theme
+# set` on its own. See docs/osk-theming.md.
+
+[pen]
+# The measured far-from-tip pen button. Leaving this absent, commented, or
+# unsupported keeps the button safely unbound. No near-tip, eraser, or pen-silo
+# mapping is supported.
+# far_button_action = "capture_text"
+# far_button_action = "open_scratchpad"

@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "yoga-deck"
+version = "0.1.0"
+description = "Test-first Linux convertible and stylus toolkit"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "Cosmin Pop" }]
+keywords = ["convertible", "hyprland", "linux", "stylus", "thinkpad"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = ["dbus-next>=0.2.3", "evdev>=1.9.3"]
+
+[project.optional-dependencies]
+dev = [
+  "hatchling>=1.25",
+  "hypothesis>=6.0",
+  "pytest>=8.0",
+  "pytest-asyncio>=0.24",
+  "ruff>=0.9",
+]
+
+[project.scripts]
+yoga-doctor = "yoga_deck.cli:main"
+yoga-deck-runtime = "yoga_deck.runtime_main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/yoga_deck"]
+
+# The plugin, user unit, and theme hook ship inside the wheel so `yoga-doctor setup` installs
+# exactly the version of each that matches the runtime. The repository paths stay the source of
+# truth; files are listed one by one so no __pycache__ or placeholder can leak into the wheel.
+[tool.hatch.build.targets.wheel.force-include]
+"omarchy-plugin/manifest.json" = "yoga_deck/data/omarchy-plugin/manifest.json"
+"omarchy-plugin/Panel.qml" = "yoga_deck/data/omarchy-plugin/Panel.qml"
+"omarchy-plugin/status.py" = "yoga_deck/data/omarchy-plugin/status.py"
+"systemd/yoga-deck.service" = "yoga_deck/data/systemd/yoga-deck.service"
+"hooks/theme-set.d/yoga-deck" = "yoga_deck/data/hooks/theme-set.d/yoga-deck"
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers --import-mode=importlib -m 'not hardware and not virtual_input and not live_desktop'"
+testpaths = ["tests"]
+markers = [
+  "integration: process, D-Bus, or adapter-boundary tests",
+  "virtual_input: isolated tests that create or replay kernel input devices",
+  "hardware: guided tests requiring physical convertible hardware",
+  "live_desktop: tests allowed to mutate the active compositor session",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

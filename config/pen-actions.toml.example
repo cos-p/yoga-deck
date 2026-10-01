@@ -1,0 +1,12 @@
+# Superseded by config.toml.example. This file still works, and Yoga Deck still
+# reads ~/.config/yoga-deck/pen-actions.toml, but new settings only exist in
+# ~/.config/yoga-deck/config.toml. Where both name a key, config.toml wins.
+#
+# Copy this file to ~/.config/yoga-deck/pen-actions.toml only if you explicitly
+# want the measured far-from-tip pen button to request one semantic action.
+#
+# Leaving the setting absent, commented, malformed, or unsupported keeps the
+# button safely unbound. No near-tip, eraser, or pen-silo mapping is supported.
+
+# far_button_action = "capture_text"
+# far_button_action = "open_scratchpad"

@@ -1,0 +1,23 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.hypothesis/
+.ruff_cache/
+.mypy_cache/
+.tox/
+.nox/
+build/
+dist/
+*.egg-info/
+coverage.xml
+.coverage
+.coverage.*
+htmlcov/
+.env
+.env.*
+.DS_Store
+
+# Raw hardware captures may contain identifiers or personal interaction data.
+captures/
+reports/

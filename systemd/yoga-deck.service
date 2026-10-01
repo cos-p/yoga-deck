@@ -1,0 +1,14 @@
+[Unit]
+Description=Yoga Deck posture safety runtime
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/yoga-deck-runtime
+ExecStopPost=%h/.local/bin/yoga-doctor recover-inputs
+Restart=on-failure
+RestartSec=1
+
+[Install]
+WantedBy=graphical-session.target

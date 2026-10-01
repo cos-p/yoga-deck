@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "cos.yoga-deck",
+  "name": "Yoga Deck",
+  "version": "0.1.0",
+  "author": "Cosmin Pop",
+  "license": "MIT",
+  "description": "Convertible posture status, display rotation, input inhibition, and keyboard settings controls.",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Yoga Deck",
+    "description": "Displays convertible posture and orientation with quick rotation, lock, and on-screen keyboard settings.",
+    "category": "System",
+    "aliases": ["convertible", "posture", "rotation", "tablet", "yoga"],
+    "allowMultiple": false,
+    "defaults": {
+      "showPostureIcon": true,
+      "pollIntervalMs": 2000
+    },
+    "schema": [
+      { "key": "showPostureIcon", "type": "boolean", "label": "Show posture icon in bar", "defaultValue": true },
+      { "key": "pollIntervalMs", "type": "integer", "label": "Status refresh interval (ms)", "min": 500, "max": 10000, "step": 500, "defaultValue": 2000 }
+    ]
+  }
+}
